@@ -28,7 +28,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; helm-shell-history (ZSH)
 
-(setq helm-zsh-history-file "~/.zsh_history" 
+(defvar helm-zsh-history-file "~/.zsh_history" 
   "Specify your the history filepath of zsh.")
 
 
@@ -66,7 +66,7 @@
     (nohighlight)
     (candidates-in-buffer)
     (action . (lambda (line)
-                (funcall helm-shell-history-action-function line)))
+                (funcall helm-zsh-history-action-function line)))
     (delayed)))
 
 (setq helm-zsh-history-action-function
@@ -80,9 +80,11 @@
   "Display command line history from history file.
 You can specify at `helm-zsh-history-file'."
   (interactive)
-  (helm :sources helm-c-zsh-history
-        :prompt "shell command: "
-        :buffer "*helm zsh history*"))
+  (if (and (executable-find "tac") (executable-find "perl"))
+      (helm :sources helm-c-zsh-history
+	    :prompt "shell command: "
+	    :buffer "*helm zsh history*")
+    (message "Cannot find perl and tac executables")))
 
 
 

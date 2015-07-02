@@ -6,7 +6,8 @@ buffer.
 
 * Usage
 
-After installation, a ~(require 'helm-zsh-history)~ should get you started. 
+After installation, a ~(require 'helm-zsh-history)~ should get you
+started. It relies on ~perl~, ~tac~ ~grep~ .
 
 The main function is ~helm-zsh-history~ which you can find using ~M-x~. 
 
@@ -16,3 +17,7 @@ timestamps are only display not insert in the buffer.
 Example : 
 
 [[file:./Pictures/screenshot1.png]]
+
+* Todo
+
+  - ability to paste several line from helm 
