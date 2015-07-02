@@ -1,0 +1,18 @@
+#+TITLE: browse you Zsh history with Helm 
+
+This package provides [[https://github.com/emacs-helm/helm][helm]] with a list of your recent commands (from
+zsh's history file) and let you insert the selection in the current
+buffer.
+
+* Usage
+
+After installation, a `(require 'helm-zsh-history)` should get you started. 
+
+The main function is `helm-zsh-history` which you can find using `M-x`. 
+
+Additionally, each command is timestamped as per the history file. The
+timestamps are only display not insert in the buffer.
+
+Example : 
+
+[[file:./Pictures/screenshot1.png]]
