@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; browse your zsh history with helm usung '(helm-zsh-history)'
+;; browse your zsh history with helm using '(helm-zsh-history)'
 
 ;;; Code:
 
@@ -28,72 +28,61 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; helm-shell-history (ZSH)
 
-(defvar helm-shell-history-file
-  (shell-command-to-string "~/.zsh_history" )
+(setq helm-zsh-history-file "~/.zsh_history" 
   "Specify your the history filepath of zsh.")
 
 
 
-(setq helm-shell-history-command
+(defvar helm-zsh-history-command
   (lambda (pattern)
     (let* ((patterns (split-string pattern))
            (grep (when (string< "" pattern)
-                   (helm-shell-history-make-grep-command patterns))))
+                   (helm-zsh-history-make-grep-command patterns))))
       (mapconcat 'identity (delq nil
-                                 `(,(concat "\\tac " helm-shell-history-file)
+                                 `(,(concat "\\tac " helm-zsh-history-file)
 				   ,(concat "\\perl -lne 'use POSIX qw(strftime);m#: (\\d+):\\d+;(.+)# && printf \"%s :: %s\\n\",strftime(\"%a_%d_%b_%Y_%H:%M:%S\",localtime \$1),\$2'" )
                                    ,grep
                                    ))
                  " | "))))
 
 
-(defvar helm-shell-history-command
-  (lambda (pattern)
-    (let* ((patterns (split-string pattern))
-           (grep (when (string< "" pattern)
-                   (helm-shell-history-make-grep-command patterns))))
-      (mapconcat 'identity (delq nil
-                                 `(,(concat "\\tac " helm-shell-history-file)
-                                   ,grep
-                                   "\\sed 's/^: [0-9]*:[0-9];//'"))
-                 " | "))))
-
-
-(defun helm-shell-history-make-grep-command (patterns)
+(defun helm-zsh-history-make-grep-command (patterns)
   "Return grep command form PATTERNS."
   (cl-loop with cmd = "\\grep -E -e "
            for search-word in patterns
            collect (concat cmd " \"" search-word "\" ") into result
            finally return (mapconcat 'identity result " | ")))
 
-(defvar helm-c-shell-history
-  '((name . "helm-shell-history")
+;(defvar helm-zsh-history-limit 1000)
+
+(defvar helm-c-zsh-history
+  '((name . "helm-zsh-history")
     (candidates-process . (lambda ()
                             (start-process
-                             "helm-shell-history-process" nil "/bin/zsh" "-c"
-                             (funcall helm-shell-history-command
+                             "helm-zsh-history-process" nil "/bin/zsh" "-c"
+                             (funcall helm-zsh-history-command
                                       helm-pattern))))
+;    (canditate-number-limit . helm-zsh-history-limit)
     (nohighlight)
     (candidates-in-buffer)
     (action . (lambda (line)
                 (funcall helm-shell-history-action-function line)))
     (delayed)))
 
-(setq helm-shell-history-action-function
+(setq helm-zsh-history-action-function
   (lambda (line)
     (cl-case major-mode
       (term-mode (term-send-raw-string line))
       (t         (insert (cadr (split-string line ":: ")))))))
 
 
-
 (defun helm-zsh-history ()
   "Display command line history from history file.
-You can specify at `helm-shell-history-file'."
+You can specify at `helm-zsh-history-file'."
   (interactive)
-  (helm :sources helm-c-shell-history
+  (helm :sources helm-c-zsh-history
         :prompt "shell command: "
-        :buffer "*helm shell history*"))
+        :buffer "*helm zsh history*"))
 
 
 
