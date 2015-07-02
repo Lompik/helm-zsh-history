@@ -6,9 +6,9 @@ buffer.
 
 * Usage
 
-After installation, a `(require 'helm-zsh-history)` should get you started. 
+After installation, a ~(require 'helm-zsh-history)~ should get you started. 
 
-The main function is `helm-zsh-history` which you can find using `M-x`. 
+The main function is ~helm-zsh-history~ which you can find using ~M-x~. 
 
 Additionally, each command is timestamped as per the history file. The
 timestamps are only display not insert in the buffer.
