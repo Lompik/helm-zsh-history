@@ -65,15 +65,15 @@
 ;    (canditate-number-limit . helm-zsh-history-limit)
     (nohighlight)
     (candidates-in-buffer)
-    (action . (lambda (line)
-                (funcall helm-zsh-history-action-function line)))
+    (action . (("Insert" . (lambda (lines)
+                             (mapc 'helm-zsh-history-action-function  (helm-marked-candidates))))))
     (delayed)))
 
-(setq helm-zsh-history-action-function
-  (lambda (line)
-    (cl-case major-mode
-      (term-mode (term-send-raw-string line))
-      (t         (insert (cadr (split-string line ":: ")))))))
+
+(defun helm-zsh-history-action-function (line)
+  (cl-case major-mode
+    (term-mode (term-send-raw-string (concat (cadr (split-string line ":: ")) "; ")))
+    (t         (insert (concat (cadr (split-string line ":: ")) "\n")))))
 
 
 (defun helm-zsh-history ()
