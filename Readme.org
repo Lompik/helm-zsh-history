@@ -1,4 +1,4 @@
-#+TITLE: browse you Zsh history with Helm 
+#+TITLE: Browse your Zsh history with Helm
 
 This package provides [[https://github.com/emacs-helm/helm][helm]] with a list of your recent commands (from
 zsh's history file) and let you insert the selection in the current
@@ -9,15 +9,17 @@ buffer.
 After installation, a ~(require 'helm-zsh-history)~ should get you
 started. It relies on ~perl~, ~tac~ ~grep~ .
 
-The main function is ~helm-zsh-history~ which you can find using ~M-x~. 
+The main function is ~helm-zsh-history~ which you can find using ~M-x~.
 
 Additionally, each command is timestamped as per the history file. The
 timestamps are only display not insert in the buffer.
 
-Example : 
+Example :
 
 [[file:./Pictures/screenshot1.png]]
 
+Ctrl+Space lets you select and insert several lines in the current buffer.
+
 * Todo
 
-  - ability to paste several line from helm 
+  - Support bash and other shells
