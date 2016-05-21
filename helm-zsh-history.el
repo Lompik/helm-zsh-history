@@ -26,7 +26,9 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; helm-shell-history (ZSH)
+;; helm-shell-history (ZSH)
+
+(require 'helm)
 
 (defvar helm-zsh-history-file "~/.zsh_history"
   "Specify your the history filepath of zsh.")
